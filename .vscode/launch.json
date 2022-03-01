@@ -4,10 +4,6 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-  
-
-
-
     {
       "type": "pwa-node",
       "request": "launch",
@@ -79,6 +75,15 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/src/Tree/AVLTree.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "AVLTreee",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/Tree/AVLTreee.mjs"
     },
   ]
 }

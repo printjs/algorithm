@@ -13,16 +13,34 @@ class AVLNode {
   }
 }
 
-const ALLOWED_NUMBER = 2;
+export class AVLTree {
+  remove(val, t) {
+    if(!t) {
+      return t;
+    }
+    if(t.val > val) {
+      t.left = this.remove(val, t.left);
+    } else if(t.val < val) {
+      t.right = this.remove(val, t.right);
+    } else {
+      if(t.left && t.right) {
+        const max = this.findMax(t.left);
+        t.val = max.val;
+        t.left = this.remove(max.val, t.left);
+      } else {
+        t = t.left ? t.left : t.right;
+      }
+    }
+    return this.balance(t);
+  }
 
-class AVLTree {
   insert(val, t) {
     if(!t) {
       return new AVLNode(val);
     }
     if(t.val > val) {
       t.left = this.insert(val, t.left);
-    } else if (t.val < val) {
+    } else if (t. val < val) {
       t.right = this.insert(val, t.right);
     }
     return this.balance(t);
@@ -32,57 +50,75 @@ class AVLTree {
     if(!t) {
       return t;
     }
-    if(Math.abs(this.height(t.left) - this.height(t.right)) >= ALLOWED_NUMBER) {
+    if(this.height(t.left) - this.height(t.right) > 1) {
       if(this.height(t.left.left) > this.height(t.left.right)) {
         t = this.rotateWithLeftChild(t);
       } else {
-        debugger
         t = this.doubleWithLeftChild(t);
       }
-    } else if(Math.abs(this.height(t.right) - this.height(t.left)) >= ALLOWED_NUMBER) {
+    } else if (this.height(t.left) - this.height(t.right) < -1) {
       if(this.height(t.right.right) > this.height(t.right.left)) {
         t = this.rotateWithRightChild(t);
       } else {
         t = this.doubleWithRightChild(t);
       }
     }
-    t.height = Math.max(this.height(t.left), this.height(t.right)) + 1;
     return t;
+  }
+
+  height(t) {
+    if(!t) {
+      return 0;
+    }
+    return Math.max(this.height(t.left), this.height(t.right)) + 1;
   }
 
   rotateWithLeftChild(t) {
     const k = t.left;
     t.left = k.right;
     k.right = t;
-    t.height = Math.max(this.height(t.left), this.height(t.right)) + 1;
-    k.height = Math.max(this.height(k.left), k.height) + 1;
     return k;
-  }
-
-  doubleWithLeftChild(t) {
-    debugger
-    t.left = this.rotateWithRightChild(t.left);
-    return this.rotateWithLeftChild(t);
-  }
-
-  doubleWithRightChild(t) {
-    t.right = this.rotateWithRightChild(t.right);
-    return this.rotateWithRightChild(t);
   }
 
   rotateWithRightChild(t) {
     const k = t.right;
     t.right = k.left;
     k.left = t;
-    t.height = Math.max(this.height(t.left), this.height(t.right)) + 1;
-    k.height = Math.max(this.height(t.right), k.height) + 1;
     return k;
   }
 
-  height(t) {
-    return t ? t.height : 0;
+  doubleWithLeftChild(t) {
+    t.left = this.rotateWithRightChild(t.left);
+    return this.rotateWithLeftChild(t);
+  }
+
+  doubleWithRightChild(t) {
+    t.right = this.rotateWithLeftChild(t.right);
+    return this.rotateWithRightChild(t);
+  }
+
+
+  findMax(t) {
+    if(!t) {
+      return t;
+    }
+    while(t.right) {
+      t = t.right;
+    }
+    return t;
+  }
+
+  findMin(t) {
+    if(!t) {
+      return t;
+    }
+    while(t.left) {
+      t = t.left;
+    }
+    return t;
   }
 }
+
 
 const avlTree = new AVLTree();
 
@@ -91,4 +127,7 @@ for (let index = 0; index < demo.length; index++) {
   tree = avlTree.insert(demo[index], tree);
 }
 
+console.log(tree);
+
+tree = avlTree.remove(11, tree);
 console.log(tree);
