@@ -7,6 +7,15 @@
     {
       "type": "pwa-node",
       "request": "launch",
+      "name": "InsertSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/sort/InsertSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
       "name": "Reverse",
       "skipFiles": [
         "<node_internals>/**"
@@ -84,6 +93,15 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/src/Tree/AVLTreee.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "PriorityQueue",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/PriorityQueue/PriorityQueue.mjs"
     },
   ]
 }
