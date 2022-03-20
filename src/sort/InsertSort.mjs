@@ -32,13 +32,11 @@ new InsertSort([5,8,7,2,10,4,9,1]).start();
 
 const demo = [5,8,7,2,10,4,9,1];
 for(let i = 0; i< demo.length; i++) {
-  if(i + 1 < demo.length && demo[i] > demo[i+1]) {
-    for(let j = 0; j< demo.length;j++) {
-      if(demo[j] > demo[i + 1]) {
-        const temp = demo[j];
-        demo[j] = demo[i+1];
-        demo[i + 1] = temp;
-      }
+  for(let j = i + 1; j < demo.length; j++) {
+    if(demo[i] > demo[j]) {
+      const temp = demo[i];
+      demo[i] = demo[j];
+      demo[j] = temp;
     }
   }
 }

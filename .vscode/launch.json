@@ -7,6 +7,51 @@
     {
       "type": "pwa-node",
       "request": "launch",
+      "name": "BubbleSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/sort/BubbleSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "QuickSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/sort/QuickSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "MergeSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/sort/MergeSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "HeapSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/sort/HeapSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "ShellSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/sort/ShellSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
       "name": "InsertSort",
       "skipFiles": [
         "<node_internals>/**"
