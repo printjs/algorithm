@@ -7,6 +7,51 @@
     {
       "type": "pwa-node",
       "request": "launch",
+      "name": "KruskalMinimumSpanningTree",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/Graph/KruskalMinimumSpanningTree.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "PrimMinimumSpanningTree",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/Graph/PrimMinimumSpanningTree.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "WeightedGraphShortestPath",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/Graph/WeightedGraphShortestPath.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "UnweightedGraphShortestPath",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/Graph/UnweightedGraphShortestPath.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "TopologicalSort",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/Graph/TopologicalSort.mjs"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
       "name": "BubbleSort",
       "skipFiles": [
         "<node_internals>/**"
