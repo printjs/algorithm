@@ -1,3 +1,4 @@
+import { DisjointSet } from '../../DisjointSet/DisjointSet.mjs';
 import { NetFlowGraph } from '../Graph.mjs';
 
 const graph = new NetFlowGraph();
@@ -30,10 +31,10 @@ class NativeNetFlow {
         }
         break;
       }
-      // for(let i = obj.path.length - 1; i >= 0; i--) {
-      //   let next = i - 1;
-      //   graph.addEdge(obj.path[i], next < 0 ? 5: obj.path[next], obj.flow);
-      // }
+      for(let i = obj.path.length - 1; i >= 0; i--) {
+        let next = i - 1;
+        graph.addEdge(obj.path[i], next < 0 ? 5: obj.path[next], obj.flow);
+      }
       obj = this.shortestPath(5, 6, graph.list);
     }
     return totalFlow;
@@ -44,7 +45,7 @@ class NativeNetFlow {
     for(let i = 0; i< list.length; i++) {
       table[i] = [i === start - 1, i === (start - 1) ? 0 : null, 0 ,null];
     }
-
+    const ds = new DisjointSet(6);
     const queue = [start];
     while (queue.length) {
       let index = queue.shift();
@@ -58,6 +59,14 @@ class NativeNetFlow {
         }
         queue.push(node.next.value);
         node = node.next;
+      }
+      for(let i = 0; i < queue.length; i++) {
+        if(i + 1 < queue.length) {
+          if(!ds.union(queue[i],queue[i + 1])) {
+            queue.splice(i,2);
+            i = 0;
+          }
+        }
       }
     }
     let index = end;

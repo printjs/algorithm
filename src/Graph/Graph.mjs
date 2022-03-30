@@ -91,12 +91,12 @@ export class NetFlowGraph {
       return false;
     }
     let p = new NetFlowLinkedList();
-    p.next = this.list[v1 - 1].next;
-    while (p.next) {
+    p.next = this.list[v1 - 1];
+    while (p && p.next) {
       if(p.next.value === v2) {
         p.next.capacity -= flow;
         if(p.next.capacity === 0) {
-          this.list[v1 - 1].next = p.next.next;
+          p.next = p.next.next;
         }
       }
       p = p.next;
