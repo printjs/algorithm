@@ -30,6 +30,10 @@ class NativeNetFlow {
         }
         break;
       }
+      // for(let i = obj.path.length - 1; i >= 0; i--) {
+      //   let next = i - 1;
+      //   graph.addEdge(obj.path[i], next < 0 ? 5: obj.path[next], obj.flow);
+      // }
       obj = this.shortestPath(5, 6, graph.list);
     }
     return totalFlow;

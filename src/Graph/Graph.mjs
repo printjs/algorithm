@@ -69,14 +69,19 @@ export class NetFlowGraph {
     let p = new NetFlowLinkedList();
     p.next = this.list[v1 - 1];
     while (p.next) {
-      p = p.next
+      if(p.next.value === v2) {
+        p.next.capacity =capacity;
+        p.next.flow = flow;
+        return;
+      }
+      p = p.next;
     }
     const temp = {
       ...this.list[v2 - 1],
       capacity,
       flow,
+      next: undefined,
     };
-    temp.next = undefined;
     p.next = temp;
   }
 
