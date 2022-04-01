@@ -1,4 +1,3 @@
-import { DisjointSet } from '../../DisjointSet/DisjointSet.mjs';
 import { NetFlowGraph } from '../Graph.mjs';
 
 const graph = new NetFlowGraph();
@@ -10,8 +9,8 @@ const graph = new NetFlowGraph();
 graph.addEdge(5, 1, 4);
 graph.addEdge(5, 2, 2);
 graph.addEdge(1, 2, 1);
-graph.addEdge(1, 3, 2);
-graph.addEdge(1, 4, 4);
+graph.addEdge(1, 3, 4);
+graph.addEdge(1, 4, 2);
 graph.addEdge(2, 4, 2);
 graph.addEdge(3, 6, 3);
 graph.addEdge(4, 6, 3);
@@ -45,7 +44,6 @@ class NativeNetFlow {
     for(let i = 0; i< list.length; i++) {
       table[i] = [i === start - 1, i === (start - 1) ? 0 : null, 0 ,null];
     }
-    const ds = new DisjointSet(6);
     const queue = [start];
     while (queue.length) {
       let index = queue.shift();
@@ -56,17 +54,9 @@ class NativeNetFlow {
           table[node.next.value - 1][1] = table[index - 1][1] + 1;
           table[node.next.value - 1][2] = node.next.capacity;
           table[node.next.value - 1][3] = index;
+          queue.push(node.next.value);
         }
-        queue.push(node.next.value);
         node = node.next;
-      }
-      for(let i = 0; i < queue.length; i++) {
-        if(i + 1 < queue.length) {
-          if(!ds.union(queue[i],queue[i + 1])) {
-            queue.splice(i,2);
-            i = 0;
-          }
-        }
       }
     }
     let index = end;
