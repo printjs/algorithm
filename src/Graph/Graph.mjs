@@ -59,19 +59,18 @@ export class NetFlowGraph {
     }
   }
 
-  addEdge(v1, v2, capacity = 0, flow = 0) {
+  addEdge(v1, v2, capacity = 0, level = 0) {
     if(!this.list[v1 - 1]) {
-      this.list[v1 - 1] = this.addNode(v1);
+      this.list[v1 - 1] = this.addNode(v1, level);
     }
     if(!this.list[v2 - 1]) {
-      this.list[v2 - 1] = this.addNode(v2);
+      this.list[v2 - 1] = this.addNode(v2, level + 1);
     }
     let p = new NetFlowLinkedList();
     p.next = this.list[v1 - 1];
     while (p.next) {
       if(p.next.value === v2) {
         p.next.capacity =capacity;
-        p.next.flow = flow;
         return;
       }
       p = p.next;
@@ -79,7 +78,6 @@ export class NetFlowGraph {
     const temp = {
       ...this.list[v2 - 1],
       capacity,
-      flow,
       next: undefined,
     };
     p.next = temp;
@@ -104,9 +102,10 @@ export class NetFlowGraph {
     return true;
   }
 
-  addNode(value) {
+  addNode(value, level = 0) {
     const node = new NetFlowLinkedList();
     node.value = value;
+    node.level = level;
     return node;
   }
 }

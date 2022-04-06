@@ -2,18 +2,32 @@ import { NetFlowGraph } from '../Graph.mjs';
 
 const graph = new NetFlowGraph();
 
+// /**
+//  * 5 is start node
+//  * 6 is end node
+//  */
+// graph.addEdge(5, 1, 4);
+// graph.addEdge(5, 2, 2);
+// graph.addEdge(1, 2, 1);
+// graph.addEdge(1, 3, 4);
+// graph.addEdge(1, 4, 2);
+// graph.addEdge(2, 4, 2);
+// graph.addEdge(3, 6, 3);
+// graph.addEdge(4, 6, 3);
+
 /**
  * 5 is start node
  * 6 is end node
  */
-graph.addEdge(5, 1, 4);
-graph.addEdge(5, 2, 2);
-graph.addEdge(1, 2, 1);
+graph.addEdge(5, 1, 10);
+graph.addEdge(5, 2, 10);
+graph.addEdge(1, 2, 2);
 graph.addEdge(1, 3, 4);
-graph.addEdge(1, 4, 2);
-graph.addEdge(2, 4, 2);
-graph.addEdge(3, 6, 3);
-graph.addEdge(4, 6, 3);
+graph.addEdge(1, 4, 8);
+graph.addEdge(2, 4, 9);
+graph.addEdge(4, 3, 6);
+graph.addEdge(4, 6, 10);
+graph.addEdge(3, 6, 10);
 
 // console.log(graph.list);
 
