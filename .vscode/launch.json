@@ -14,5 +14,16 @@
         "args": [
             "${workspaceFolder}/src/evaluate.ts"
         ]
+    }, {
+        "type": "node",
+        "request": "launch",
+        "name": "stack_linklist",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/linkedList/stack_linklist.ts"
+        ]
     }],
 }
