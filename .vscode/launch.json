@@ -25,5 +25,16 @@
         "args": [
             "${workspaceFolder}/src/linkedList/stack_linklist.ts"
         ]
+    }, {
+        "type": "node",
+        "request": "launch",
+        "name": "remove_num_k",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/linkedList/num_k_node.ts"
+        ] 
     }],
 }
