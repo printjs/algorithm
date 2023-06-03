@@ -1,6 +1,6 @@
 import { SimpleLinkNode } from "./utils"
 
-function generateLinkList() {
+export function generateLinkList() {
   const first = new SimpleLinkNode()
   first.title ='first'
 
@@ -23,7 +23,7 @@ function generateLinkList() {
   return first
 }
 
-function generateLinkList2() {
+export function generateLinkList2() {
   const zero = new SimpleLinkNode()
   zero.title = '0'
 

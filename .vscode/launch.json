@@ -36,5 +36,16 @@
         "args": [
             "${workspaceFolder}/src/linkedList/num_k_node.ts"
         ] 
+    }, {
+        "type": "node",
+        "request": "launch",
+        "name": "reverse_link_list",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/linkedList/reverse_link_list.ts"
+        ] 
     }],
 }
