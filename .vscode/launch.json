@@ -47,5 +47,16 @@
         "args": [
             "${workspaceFolder}/src/linkedList/reverse_link_list.ts"
         ] 
+    }, {
+        "type": "node",
+        "request": "launch",
+        "name": "sort",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/sort/sort.ts"
+        ] 
     }],
 }
