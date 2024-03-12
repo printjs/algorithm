@@ -27,22 +27,40 @@ export class LinkUtils<T extends {next: T, title: string}> {
   }
 
   insert(link: T, node: T, index: number) {
-    
+    let p = new SimpleLinkNode()
+    let cur = new SimpleLinkNode()
+    p.next = link
+    cur = p
+    for(let i = 0; i < index; i++) {
+      cur = cur.next
+    }
+    if(cur) {
+      (node as SimpleLinkNode).next = cur.next
+      cur.next = node
+    } else {
+      console.log(`error params ${index}, the value is out of link`)
+    }
+    return p
   }
 
   remove(link: T, node: T) {
     let p = new SimpleLinkNode()
+    let cur = new SimpleLinkNode()
+    let pre = new SimpleLinkNode()
     p.next = link
+    pre = p
+    cur.next = link
     const sets = new Set<T>()
-    while(p.next) {
-      sets.add(p.next as T)
+    while(cur.next) {
+      sets.add(cur.next as T)
       if(sets.has(node)) {
-        p.next = p.next.next
+        pre.next = cur.next.next
         break
       } else {
-        p = p.next
+        pre = cur.next
+        cur = cur.next
       }
     }
-    return link
+    return p
   }
 }
