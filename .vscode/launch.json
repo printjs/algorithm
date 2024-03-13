@@ -3,7 +3,8 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
+    "configurations": [
+    {
         "type": "node",
         "request": "launch",
         "name": "evaluate",
@@ -58,7 +59,8 @@
         "args": [
             "${workspaceFolder}/src/sort/sort.ts"
         ] 
-    }, {
+    },
+    {
         "type": "node",
         "request": "launch",
         "name": "utils.test.ts",
@@ -69,5 +71,18 @@
         "args": [
             "${workspaceFolder}/src/linkedList/utils.test.ts"
         ] 
-    }],
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "traverse.test.ts",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/binaryTree/traverse.test.ts"
+        ] 
+    }
+    ],
 }
