@@ -1,27 +1,36 @@
-import { BinaryTree } from "./types";
+import { BinaryTree } from "./utils";
 
-export class Traverse {
-  private tree!:BinaryTree
+export class Traverse<T extends {
+  left?: BinaryTree,
+  right?: BinaryTree,
+  title: string,
+  value?: number
+}> {
+  private tree!:T
 
-  private list:string [] = []
+  private titleList:string [] = []
 
-  constructor(tree: BinaryTree) {
+  private valueList: number [] = []
+
+  constructor(tree: T) {
     this.tree = tree
   }
 
-  levelOrderTraversal() {
-    const queue:BinaryTree[] = [this.tree]
+  levelOrderTraversal () {
+    const queue: T[] = [this.tree]
     while (queue.length > 0) {
       const node = queue.shift()
       if(node?.left) {
-        queue.push(node.left)
+        queue.push(node.left as T)
       }
       if(node?.right) {
-        queue.push(node.right)
+        queue.push(node.right as T)
       }
-      this.list.push(node?.title || "")
+      this.titleList.push(node?.title || "")
+      if(node && Number.isInteger(node.value)) this.valueList.push(node.value || 0)
     }
-    console.log(this.list)
+    console.log("title", this.titleList)
+    console.log("value", this.valueList)
     this.resetList()
   }
 
@@ -29,17 +38,20 @@ export class Traverse {
     switch (traversalMode) {
       case "preOrder":
         this.preOrder(this.tree)
-        console.log(this.list)
+        console.log("title", this.titleList)
+        console.log("value", this.valueList)
         this.resetList()
         break;
       case "middleOrder":
         this.middleOrder(this.tree)
-        console.log(this.list)
+        console.log("title", this.titleList)
+        console.log("value", this.valueList)
         this.resetList()
         break;
       case "postOrder":
         this.postOrder(this.tree)
-        console.log(this.list)
+        console.log("title", this.titleList)
+        console.log("value", this.valueList)
         this.resetList()
         break;
       default:
@@ -48,37 +60,41 @@ export class Traverse {
     }
   }
   
-  private preOrder(tree: BinaryTree) {
-    this.list.push(tree.title)
+  private preOrder(tree: T) {
+    this.titleList.push(tree.title)
+    if(tree && Number.isInteger(tree.value)) this.valueList.push(tree.value || 0)
     if(tree.left) {
-      this.preOrder(tree.left)
+      this.preOrder(tree.left as T)
     }
     if(tree.right) {
-      this.preOrder(tree.right)
+      this.preOrder(tree.right as T)
     }
   }
 
-  private middleOrder(tree: BinaryTree) {
+  private middleOrder(tree: T) {
     if(tree.left) {
-      this.middleOrder(tree.left)
+      this.middleOrder(tree.left as T)
     }
-    this.list.push(tree.title)
+    this.titleList.push(tree.title)
+    if(tree && Number.isInteger(tree.value)) this.valueList.push(tree.value || 0)
     if(tree.right) {
-      this.middleOrder(tree.right)
+      this.middleOrder(tree.right as T)
     }
   }
 
-  private postOrder(tree: BinaryTree) {
+  private postOrder(tree: T) {
     if(tree.left) {
-      this.postOrder(tree.left)
+      this.postOrder(tree.left as T)
     }
     if(tree.right) {
-      this.postOrder(tree.right)
+      this.postOrder(tree.right as T)
     }
-    this.list.push(tree.title)
+    this.titleList.push(tree.title)
+    if(tree && Number.isInteger(tree.value)) this.valueList.push(tree.value || 0)
   }
 
   private resetList() {
-    this.list = []
+    this.titleList = []
+    this.valueList = []
   }
 }

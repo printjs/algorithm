@@ -1,5 +1,5 @@
 import { Traverse } from "./traverse";
-import { BinaryTree } from "./types";
+import { BinaryTree } from "./utils";
 
 const nodes = 10
 
@@ -31,7 +31,3 @@ t.levelOrderTraversal()
 t.breadthFirstTraversal("preOrder")
 t.breadthFirstTraversal("middleOrder")
 t.breadthFirstTraversal("postOrder")
-
-function generatedBinaryTreeByArray() {
-
-}
