@@ -83,6 +83,18 @@
         "args": [
             "${workspaceFolder}/src/binaryTree/traverse.test.ts"
         ] 
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "avl.test.ts",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/binaryTree/avl.test.ts"
+        ] 
     }
     ],
 }
