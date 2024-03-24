@@ -12,6 +12,8 @@ export class Traverse<T extends {
 
   private valueList: number [] = []
 
+  private nodeList: string[] = []
+
   constructor(tree: T) {
     this.tree = tree
   }
@@ -28,30 +30,28 @@ export class Traverse<T extends {
       }
       this.titleList.push(node?.title || "")
       if(node && Number.isInteger(node.value)) this.valueList.push(node.value || 0)
+      if(node) this.nodeList.push(JSON.stringify(node))
     }
     console.log("title", this.titleList)
     console.log("value", this.valueList)
     this.resetList()
   }
 
-  breadthFirstTraversal(traversalMode: "preOrder" | "postOrder" | "middleOrder") {
+  breadthFirstTraversal(traversalMode: "preOrder" | "postOrder" | "middleOrder", printMode?: "title" | "value" | "node") {
     switch (traversalMode) {
       case "preOrder":
         this.preOrder(this.tree)
-        console.log("title", this.titleList)
-        console.log("value", this.valueList)
+        this.print(printMode)
         this.resetList()
         break;
       case "middleOrder":
         this.middleOrder(this.tree)
-        console.log("title", this.titleList)
-        console.log("value", this.valueList)
+        this.print(printMode)
         this.resetList()
         break;
       case "postOrder":
         this.postOrder(this.tree)
-        console.log("title", this.titleList)
-        console.log("value", this.valueList)
+        this.print(printMode)
         this.resetList()
         break;
       default:
@@ -63,6 +63,7 @@ export class Traverse<T extends {
   private preOrder(tree: T) {
     this.titleList.push(tree.title)
     if(tree && Number.isInteger(tree.value)) this.valueList.push(tree.value || 0)
+    if(tree) this.nodeList.push(JSON.stringify(tree))
     if(tree.left) {
       this.preOrder(tree.left as T)
     }
@@ -77,6 +78,7 @@ export class Traverse<T extends {
     }
     this.titleList.push(tree.title)
     if(tree && Number.isInteger(tree.value)) this.valueList.push(tree.value || 0)
+    if(tree) this.nodeList.push(JSON.stringify(tree))
     if(tree.right) {
       this.middleOrder(tree.right as T)
     }
@@ -91,10 +93,34 @@ export class Traverse<T extends {
     }
     this.titleList.push(tree.title)
     if(tree && Number.isInteger(tree.value)) this.valueList.push(tree.value || 0)
+    if(tree) this.nodeList.push(JSON.stringify(tree))
   }
 
   private resetList() {
     this.titleList = []
     this.valueList = []
+    this.nodeList = []
+  }
+
+  private print(printMode?: "title" | "value" | "node") {
+    switch (printMode) {
+      case "title":
+        console.log("title", this.titleList)
+        break
+      case "value":
+        console.log("value", this.valueList)
+        break;
+      case "node":
+        console.log("node", this.nodeList)
+      default:
+        console.log("title", this.titleList)
+        console.log("value", this.valueList)
+        console.log("node", this.nodeList)
+        break;
+    }
+  }
+
+  public printTree() {
+    console.log(JSON.stringify(this.tree))
   }
 }

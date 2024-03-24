@@ -8,6 +8,7 @@ export class AVLTree extends BinaryTree{
   left?: AVLTree
   right?: AVLTree
   height: number = -1
+  balanceFactor: number = 0
   value!: number
 }
 

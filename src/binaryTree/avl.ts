@@ -1,9 +1,5 @@
 import { AVLTree } from "./utils";
 
-export class AVLPoint {
-  next!: AVLTree
-}
-
 export class AVLBalanceTree {
   private tree!: AVLTree
 
@@ -11,117 +7,150 @@ export class AVLBalanceTree {
     return this.tree
   }
 
-  insert(nodeValue: number) {
+  public insert(nodeValue: number) {
     if(!this.tree) {
       const root = new AVLTree()
       root.value = nodeValue
+      this.updateHeight(root)
       this.tree = root
       return
     }
-    const p = new AVLPoint()
-    p.next = this.tree
-    while (p.next) {
-      if(nodeValue > p.next.value) {
-        if(p.next.right) {
-          p.next = p.next.right
-        } else {
-          const node = new AVLTree()
-          node.value = nodeValue
-          p.next.right = node
-          break
-        }
-      } else if(nodeValue < p.next.value) {
-        if(p.next.left) {
-          p.next = p.next.left
-        } else {
-          const node = new AVLTree()
-          node.value = nodeValue
-          p.next.left = node
-          break
-        }
+    this.tree = this.insertHelper(this.tree, nodeValue)
+  }
+
+  public remove(nodeValue: number) {
+    this.tree = this.removeHelper(this.tree, nodeValue) as AVLTree
+  }
+
+  private removeHelper(node: AVLTree, value: number) {
+    if(node.value === value) {
+      let result!: AVLTree
+      if(!node.left && !node.right) {
+        return undefined
+      }
+      if(!node.left) {
+        result = node.right as AVLTree
+      } else if (!node.right) {
+        result = node.left as AVLTree
       } else {
-        console.log(`this ${nodeValue} of node has been inserted into tree`)
-        return
+        const left = node.left
+        const right = node.right
+        node = node.right
+        while (node.left) {
+          node = node.left
+        }
+        node.left = left
+        result = right
+      }
+      this.updateHeight(result)
+      return this.rotate(result)
+    } else if(node.value > value) {
+      if(node.left) {
+        node.left = this.removeHelper(node.left, value)
+      }
+    } else {
+      if(node.right) {
+        node.right = this.removeHelper(node.right, value)
       }
     }
+    return node
   }
 
-  remove(nodeValue: number) {
-    const p = new AVLPoint()
-    let pre = this.tree
-    p.next = this.tree
-    while (p.next) {
-      if(p.next.value === nodeValue) {
-        if(!p.next.left && !p.next.right) {
-          if(pre.value === nodeValue) {
-            this.tree = new AVLTree()
-            return
-          }
-          if(pre.left && pre.left.value === nodeValue) {
-            pre.left = undefined
-            return
-          }
-          if (pre.right && pre.right.value === nodeValue) {
-            pre.right = undefined
-            return
-          }
-        }
-        if(!p.next.left) {
-          if(pre.left && pre.left.value === nodeValue) {
-            pre.left = p.next.right
-            return
-          }
-          if(pre.right && pre.right.value === nodeValue) {
-            pre.right = p.next.right
-            return
-          }
-        }
-        if(!p.next.right) {
-          if(pre.left && pre.left.value === nodeValue) {
-            pre.left = p.next.left
-            return
-          }
-          if(pre.right && pre.right.value === nodeValue) {
-            pre.right = p.next.left
-            return
-          }
-        }
-        if(pre.left && pre.left.value === nodeValue) {
-          const temp = p.next.left
-          pre.left = p.next.right as AVLTree
-          pre.left.left = temp
-          return
-        }
-        if(pre.right && pre.right.value === nodeValue) {
-          const temp = p.next.right
-          pre.right = p.next.left as AVLTree
-          pre.right.right = temp
-          return
-        }
-      } else if (p.next.value > nodeValue) {
-        if(p.next.left) {
-          pre = p.next
-          p.next = p.next.left
-        } else {
-          console.log(`this node ${nodeValue} doesn't exist in currnet tree`)
-          break
-        }
-      } else if(p.next.value < nodeValue) {
-        if(p.next.right) {
-          pre = p.next
-          p.next = p.next.right
-        } else {
-          console.log(`this node ${nodeValue} doesn't exist in currnet tree`)
-          break
-        }
+  private insertHelper(node: AVLTree, value: number) {
+    if(node.value === value) {
+      return node
+    }
+    if(node.value > value) {
+      if(node.left) {
+        node.left = this.insertHelper(node.left, value)
+      } else {
+        const child = new AVLTree()
+        child.value = value
+        node.left = child
+      }
+    } else {
+      if(node.right) {
+        node.right = this.insertHelper(node.right, value)
+      } else {
+        const child = new AVLTree()
+        child.value = value
+        node.right = child
       }
     }
+
+    this.updateHeight(node)
+    return this.rotate(node)
   }
 
-  height(node?: AVLTree): number {
+  private height(node?: AVLTree): number {
     if(!node || (!node.left && !node.right)) {
       return 0
     }
-    return Math.max(this.height(node.left), this.height(node.right)) + 1
+    return Math.max(node.left ? this.height(node.left) + 1 : 0, node.right ? this.height(node.right) + 1 : 0)
+  }
+
+  private updateHeight(node: AVLTree) {
+    if(node.left) this.updateHeight(node.left)
+    if(node.right) this.updateHeight(node.right)
+    node.height = this.height(node)
+  }
+
+  private balanceFactor(node: AVLTree): number {
+    if(node.left) {
+      this.balanceFactor(node.left)
+    }
+    if(node.right) {
+      this.balanceFactor(node.right)
+    }
+    const balanceFactor: number = (node.left ? node.left.height + 1 : 0) - (node.right? node.right.height + 1 : 0)
+    node.balanceFactor = balanceFactor
+    return balanceFactor
+  }
+
+  private rotate(node: AVLTree) {
+    const balanceFactor = this.balanceFactor(node)
+    if(balanceFactor > 1) {
+      const leftBalanceFactor = this.balanceFactor(node.left as AVLTree)
+      if(leftBalanceFactor < 0) {
+        return this.leftRightRotate(node)
+      }
+      return this.rightRotate(node)
+    }
+    if(balanceFactor < -1) {
+      const rightBalanceFactor = this.balanceFactor(node.right as AVLTree)
+      if(rightBalanceFactor > 0) {
+        return this.rightLeftRotate(node)
+      }
+      return this.leftRotate(node)
+    }
+    return node
+  }
+
+  private leftRightRotate(node: AVLTree) {
+    const right = node.left?.right as AVLTree
+    if(node.left) right.left = node.left
+    node.left = right
+    return this.rightRotate(node)
+  }
+
+  private rightRotate(node: AVLTree) {
+    const left = node.left as AVLTree
+    node.left = left.right
+    left.right = node
+    return left
+  }
+
+  private leftRotate(node: AVLTree) {
+    const right = node.right as AVLTree
+    node.right = right.left
+    right.left = node
+    return right
+  }
+
+  private rightLeftRotate(node: AVLTree) {
+    const left = node.right?.left as AVLTree
+    if(node.right) left.right = node.right
+    node.right = left.right
+    return this.leftRotate(node)
   }
 }
