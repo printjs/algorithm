@@ -95,6 +95,18 @@
         "args": [
             "${workspaceFolder}/src/binaryTree/avl.test.ts"
         ] 
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "binary_search.ts",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/find/binary_search.ts"
+        ] 
     }
     ],
 }
