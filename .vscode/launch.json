@@ -107,6 +107,18 @@
         "args": [
             "${workspaceFolder}/src/find/binary_search.ts"
         ] 
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "sortList.test.ts",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/src/sort/sortList.test.ts"
+        ] 
     }
     ],
 }
